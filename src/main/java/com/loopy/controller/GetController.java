@@ -13,6 +13,7 @@ public class GetController {
         return "Hi getMethod";
 
     }
+    ////client로부터 변수 받아오는 방법.
     @GetMapping("/getParameter") //localhost:8080/api/getParameter?id=1234&password=abcd
     public String getParameter(@RequestParam String id, @RequestParam String password){
              System.out.println("id : "+ id);
@@ -20,4 +21,7 @@ public class GetController {
 
              return id+password;
     }
+    //많은 개수의 변수를 한번에 받는 방법.
+    public String multiParameter()
+
 }
