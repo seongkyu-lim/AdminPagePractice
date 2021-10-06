@@ -23,6 +23,7 @@ public class GetController {
 
              return id+password;
     }
+
     //많은 개수의 변수를 한번에 받는 방법.
     //getter,setter(생성자?)를 이용해서 받는다.
     @GetMapping("/getMultiParam")
