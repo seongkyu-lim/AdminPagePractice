@@ -9,7 +9,7 @@ public class PostController {
 
     // post가 사용되는 경우 !
     // HTML <Form>
-    // ajax 검색
+    // ajax로 검색
 
     //Post 방식으로 클라이언트로부터 데이터 받기.
     @PostMapping("/postMethod") // @RequestMapping도 가능합니다.

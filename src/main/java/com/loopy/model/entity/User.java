@@ -1,7 +1,6 @@
 package com.loopy.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +10,8 @@ import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
+//기본 생성자.
+@NoArgsConstructor
 @Entity // == table.
 //클래스명과 테이블명을 같게해주면 자동으로 매칭해줌.
 public class User {
