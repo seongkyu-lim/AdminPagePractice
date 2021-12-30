@@ -2,13 +2,13 @@ package com.loopy.model.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
+@ToString(exclude = {"user","item"})
 @Data
+//모든 생성자.
 @AllArgsConstructor
 //기본 생성자.
 @NoArgsConstructor
@@ -29,5 +29,9 @@ public class User {
     private String createdBy;
     private LocalDateTime updatedAt;
     private String updatedBy;
+
+    // LAZY : 지연 로딩, EAGER : 즉시 로딩.
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<OrderDetail> orderDetailList;
 
 }

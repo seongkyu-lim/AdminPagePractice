@@ -19,8 +19,8 @@ public class OrderDetailRepositoryTest extends ApplicationTests {
         OrderDetail orderDetail = new OrderDetail();
 
         orderDetail.setOrdered_at(LocalDateTime.now());
-        orderDetail.setItemId(1L);
-        orderDetail.setUserId(1L);
+        //orderDetail.setItemId(1L);
+        //orderDetail.setUserId(1L);
 
     }
 }

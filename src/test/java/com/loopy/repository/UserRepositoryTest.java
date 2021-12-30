@@ -37,14 +37,18 @@ public class UserRepositoryTest extends ApplicationTests {
     }
 
     @Test
-    public void read() {
+    public void read() { 
 
-        Optional<User> user = userRepository.findById(1L);
+        Optional<User> user = userRepository.findByAccount("TestUser01");
 
         //user가 존재한다면,
         user.ifPresent(selectUser ->{
             System.out.println("user : "+selectUser);
             System.out.println("email : "+ selectUser.getEmail());
+
+            selectUser.getOrderDetailList().stream().forEach(detail ->{
+                System.out.println(detail.getItem());
+            });
         });
 
     }
