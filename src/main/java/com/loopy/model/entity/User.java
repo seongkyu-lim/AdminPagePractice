@@ -22,16 +22,16 @@ public class User {
     private Long id;
 
     private String account;
+    private String password;
+    private String status;
     private String email;
     // DB에는 phone_number와 같이 snake 형식으로 표기하지만 자바에서는 camel case로 선언한다. : jpa가 ? 자동으로 매칭해줌.
     private String phoneNumber;
+    private LocalDateTime registeredAt;
+    private LocalDateTime unregisteredAt;
     private LocalDateTime createdAt;
     private String createdBy;
     private LocalDateTime updatedAt;
     private String updatedBy;
-
-    // LAZY : 지연 로딩, EAGER : 즉시 로딩.
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private List<OrderDetail> orderDetailList;
 
 }
