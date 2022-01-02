@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@ToString(exclude = {"user","item"})
 @Data
 //모든 생성자.
 @AllArgsConstructor
@@ -14,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity // == table.
 //클래스명과 테이블명을 같게해주면 자동으로 매칭해줌.
+@ToString(exclude = {"orderGroup"})
 public class User {
 
     @Id
@@ -33,5 +33,10 @@ public class User {
     private String createdBy;
     private LocalDateTime updatedAt;
     private String updatedBy;
+
+    // user 1 : n ordergroup
+    // n개이기에 당연히 List로 받아와야함.
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<OrderGroup> orderGroupList;
 
 }

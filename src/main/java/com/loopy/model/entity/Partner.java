@@ -3,17 +3,17 @@ package com.loopy.model.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
+@ToString(exclude = {"itemList","category"})
 public class Partner {
 
     @Id
@@ -34,6 +34,10 @@ public class Partner {
     private LocalDateTime updatedAt;
     private String updatedBy;
 
-    private Long categoryId;
+    @ManyToOne
+    private Category category;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "partner")
+    private List<Item> itemList;
 
 }

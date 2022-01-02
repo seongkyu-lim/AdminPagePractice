@@ -30,7 +30,7 @@ public class ItemRepositoryTest extends ApplicationTests {
         item.setRegisteredAt(LocalDateTime.now());
         item.setCreatedAt(LocalDateTime.now());
         item.setCreatedBy("partner01");
-        item.setPartnerId(1L);
+        // item.setPartnerId(1L);
 
         Item newItem = itemRepository.save(item);
 
