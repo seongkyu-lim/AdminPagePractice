@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -22,41 +23,61 @@ public class UserRepositoryTest extends ApplicationTests {
 
     @Test
     public void create() {
+        String account = "seongkyu";
+        String password = "limlim";
+        String status = "user";
+        String email = "afsdf@adf.com";
+        String phoneNumber="010-2323-2323";
+        LocalDateTime registeredAt = LocalDateTime.now();
+        LocalDateTime createdAt = LocalDateTime.now();
+        String createdBy = "admin";
 
         User user = new User();
 
-
-        user.setAccount("TestUser01");
-        user.setEmail("TestUser01@naver.com");
-        user.setPhoneNumber("010-1111-1111");
-        user.setCreatedAt(LocalDateTime.now());
-        user.setCreatedBy("admin");
+        user.setAccount(account);
+        user.setPassword(password);
+        user.setStatus(status);
+        user.setEmail(email);
+        user.setPhoneNumber(phoneNumber);
+        user.setRegisteredAt(registeredAt);
+        user.setCreatedAt(createdAt);
+        user.setCreatedBy(createdBy);
 
         User newUser = userRepository.save(user);
-        System.out.println("newUser : "+ newUser);
+
+        Assert.assertNotNull(newUser);
+        Assert.assertEquals(newUser.getAccount(), account);
+        Assert.assertEquals(newUser.getPassword(), password);
+        Assert.assertEquals(newUser.getStatus(), status);
+        Assert.assertEquals(newUser.getEmail(), email);
+        Assert.assertEquals(newUser.getPhoneNumber(), phoneNumber);
+        Assert.assertEquals(newUser.getRegisteredAt(), registeredAt);
+        Assert.assertEquals(newUser.getCreatedAt(), createdAt);
+        Assert.assertEquals(newUser.getCreatedBy(), createdBy);
+
     }
 
     @Test
-    public void read() { 
+    public void read() {
 
-        Optional<User> user = userRepository.findByAccount("TestUser01");
+        String email = "afsdf@adf.com";
 
-        //user가 존재한다면,
-        user.ifPresent(selectUser ->{
-            System.out.println("user : "+selectUser);
-            System.out.println("email : "+ selectUser.getEmail());
+        Optional<User> optionalUser = userRepository.findByEmail(email);
 
-            selectUser.getOrderDetailList().stream().forEach(detail ->{
-                System.out.println(detail.getItem());
-            });
+        optionalUser.ifPresent(c ->{
+            System.out.println(c.getAccount());
+            System.out.println(c.getEmail());
+            System.out.println(c.getPassword());
+            System.out.println(c.getPhoneNumber());
         });
-
     }
 
     public void update() {
 
-        Optional<User> user = userRepository.findById(1L);
+        // User user = userRepository.findFirstByPhoneNumberOrderByDesc("010-2323-2323");
 
+        // Assert.assertNotNull(user);
+        /**
         user.ifPresent(selectUser -> {
             selectUser.setAccount("PPPP");
             selectUser.setUpdatedAt(LocalDateTime.now());
@@ -64,6 +85,7 @@ public class UserRepositoryTest extends ApplicationTests {
 
             userRepository.save(selectUser);
         });
+         **/
 
 
 

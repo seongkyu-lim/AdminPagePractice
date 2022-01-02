@@ -33,7 +33,5 @@ public class Item {
     private LocalDateTime updatedAt;
     private String updatedBy;
 
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
-    private List<OrderDetail> OrderDetailList;
+    private Long partnerId;
 }

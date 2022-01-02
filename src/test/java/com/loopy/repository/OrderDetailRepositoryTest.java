@@ -18,7 +18,7 @@ public class OrderDetailRepositoryTest extends ApplicationTests {
     public void create(){
         OrderDetail orderDetail = new OrderDetail();
 
-        orderDetail.setOrdered_at(LocalDateTime.now());
+        orderDetail.setCreatedAt(LocalDateTime.now());
         //orderDetail.setItemId(1L);
         //orderDetail.setUserId(1L);
 

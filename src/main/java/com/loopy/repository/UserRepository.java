@@ -18,5 +18,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
 
     Optional<User> findByAccountAndEmail(String account, String email);
+
+    // User 객체를 바로 반환.
+    // phonenumber가 중복되는 경우 findFirstBy를 적용하면 가장 최근의 것을 조회.
+    // OrderByDesc로 가장 늦게 추가된 것을 조회.
+    // User findFirstByPhoneNumberOrderByDesc(String phoneNumber);
 }
- 

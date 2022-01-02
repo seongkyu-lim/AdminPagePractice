@@ -2,10 +2,13 @@ package com.loopy.repository;
 
 import com.loopy.ApplicationTests;
 import com.loopy.model.entity.Item;
+import org.apache.tomcat.jni.Local;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class ItemRepositoryTest extends ApplicationTests {
@@ -18,9 +21,16 @@ public class ItemRepositoryTest extends ApplicationTests {
 
         Item item = new Item();
 
-        item.setName("노트북");
-        item.setPrice(1000L);
-        item.setContent("애플");
+        item.setStatus("UNREGISTERED");
+        item.setName("삼성 노트북");
+        item.setTitle("삼성 노트북 A100");
+        item.setPrice(BigDecimal.valueOf(1000000));
+        item.setContent("2019년형 이에요.");
+        item.setBrandName("samsung");
+        item.setRegisteredAt(LocalDateTime.now());
+        item.setCreatedAt(LocalDateTime.now());
+        item.setCreatedBy("partner01");
+        item.setPartnerId(1L);
 
         Item newItem = itemRepository.save(item);
 
