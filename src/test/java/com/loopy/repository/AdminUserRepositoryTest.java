@@ -14,7 +14,7 @@ public class AdminUserRepositoryTest extends ApplicationTests {
     private AdminUserRepository adminUserRepository;
 
     @Test
-    public void create(){
+     public void create(){
         AdminUser adminUser = new AdminUser();
 
         adminUser.setAccount("adminuser01");
@@ -22,8 +22,6 @@ public class AdminUserRepositoryTest extends ApplicationTests {
         adminUser.setStatus("registered" );
         adminUser.setRole("partner");
         adminUser.setRegisteredAt(LocalDateTime.now());
-        adminUser.setCreatedAt(LocalDateTime.now());
-        adminUser.setCreatedBy("admin");
 
         AdminUser newAdminUser = adminUserRepository.save(adminUser);
 
