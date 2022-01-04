@@ -29,9 +29,8 @@ public class UserRepositoryTest extends ApplicationTests {
         String email = "afsdf@adf.com";
         String phoneNumber="010-2323-2323";
         LocalDateTime registeredAt = LocalDateTime.now();
-        LocalDateTime createdAt = LocalDateTime.now();
-        String createdBy = "admin";
 
+        /**
         User user = new User();
 
         user.setAccount(account);
@@ -40,8 +39,21 @@ public class UserRepositoryTest extends ApplicationTests {
         user.setEmail(email);
         user.setPhoneNumber(phoneNumber);
         user.setRegisteredAt(registeredAt);
-        user.setCreatedAt(createdAt);
-        user.setCreatedBy(createdBy);
+        **/
+
+        //Builder annoataion을 통해 builder pattern 적용.
+        /*
+        장점 1. 원하는 값들만 간편하게 생성할 수 있다. 생성자를 이용하면 entity클래스에 만들어 주어야한다.
+        장점 2. 코드가 .으로 이어져 간편하다.
+         */
+        User user = User.builder()
+                .account(account)
+                .password(password)
+                .status(status)
+                .email(email)
+                .phoneNumber(phoneNumber)
+                .registeredAt(registeredAt)
+                .build();
 
         User newUser = userRepository.save(user);
 
@@ -52,8 +64,6 @@ public class UserRepositoryTest extends ApplicationTests {
         Assert.assertEquals(newUser.getEmail(), email);
         Assert.assertEquals(newUser.getPhoneNumber(), phoneNumber);
         Assert.assertEquals(newUser.getRegisteredAt(), registeredAt);
-        Assert.assertEquals(newUser.getCreatedAt(), createdAt);
-        Assert.assertEquals(newUser.getCreatedBy(), createdBy);
 
     }
 

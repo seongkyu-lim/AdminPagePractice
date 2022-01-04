@@ -1,6 +1,7 @@
 package com.loopy.model.entity;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -20,6 +21,10 @@ import java.util.List;
 //클래스명과 테이블명을 같게해주면 자동으로 매칭해줌.
 @ToString(exclude = {"orderGroup"})
 @EntityListeners(AuditingEntityListener.class)
+//객체 생성 시 사용.
+@Builder
+//객체 수정 시 사용. (builder와 비슷하게 체인형식으로 코드 심플화 가능)
+@Accessors(chain = true)
 public class User {
 
     @Id
