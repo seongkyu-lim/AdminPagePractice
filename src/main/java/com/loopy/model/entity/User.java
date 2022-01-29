@@ -23,7 +23,7 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 //객체 생성 시 사용.
 @Builder
-//객체 수정 시 사용. (builder와 비슷하게 체인형식으로 코드 심플화 가능)
+//객체 수정 시 사용. (builder와 비슷하게 체인형식으로 코드 심플화 가능) with set of Data
 @Accessors(chain = true)
 public class User {
 
