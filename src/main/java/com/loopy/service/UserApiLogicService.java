@@ -71,12 +71,20 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
         })
                 .map(user -> userRepository.save(user))
                 .map(updateUser -> response(updateUser))
-                .orElseGet(() -> Header.ERROR("데이터 없음"));
+                .orElseGet(() -> Header.ERROR("업데이트할 데이터 없음"));
     }
 
     @Override
     public Header delete(Long id) {
-        return null;
+
+        Optional<User> optional = userRepository.findById(id);
+
+        return optional
+                .map(user -> {
+                    userRepository.delete(user);
+                    return Header.OK();
+                })
+                .orElseGet(() -> Header.ERROR("삭제할 데이터 없음"));
     }
 
 
