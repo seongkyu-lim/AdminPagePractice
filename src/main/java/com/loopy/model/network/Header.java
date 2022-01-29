@@ -23,6 +23,7 @@ public class Header<T> {
     private String description;
 
     //계속해서 바뀌는 데이터 부분(body)
+    // 이렇게 하면 데이터 부분에 어떤 클래스의 객체가 들어와도 상관없어진다.
     private T data;
 
     //ok
