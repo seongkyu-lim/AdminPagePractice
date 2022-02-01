@@ -6,6 +6,7 @@ import com.loopy.model.network.Header;
 import com.loopy.model.network.request.ItemApiRequest;
 import com.loopy.model.network.response.ItemApiResponse;
 import com.loopy.repository.ItemRepository;
+import com.loopy.repository.PartnerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.Optional;
 public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemApiResponse> {
 
     private final ItemRepository itemRepository;
+    private final PartnerRepository partnerRepository;
 
     @Override
     public Header<ItemApiResponse> create(Header<ItemApiRequest> request) {
@@ -31,6 +33,7 @@ public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemAp
                 .price(itemApiRequest.getPrice())
                 .content(itemApiRequest.getContent())
                 .registeredAt(LocalDateTime.now())
+                .partner(partnerRepository.getOne(itemApiRequest.getParterId()))
                 .build();
 
         Item newItem = itemRepository.save(item);
@@ -58,7 +61,9 @@ public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemAp
                     .setTitle(itemApiRequest.getTitle())
                     .setBrandName(itemApiRequest.getBrandName())
                     .setPrice(itemApiRequest.getPrice())
-                    .setContent(itemApiRequest.getContent());
+                    .setContent(itemApiRequest.getContent())
+                    .setRegisteredAt(itemApiRequest.getRegisteredAt())
+                    .setUnregisteredAt(itemApiRequest.getUnregisteredAt());
 
             itemRepository.save(item);
 
@@ -91,6 +96,7 @@ public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemAp
                 .content(item.getContent())
                 .registeredAt(item.getRegisteredAt())
                 .unregisteredAt(item.getUnregisteredAt())
+                .parterId(item.getPartner().getId())
                 .build();
 
         return Header.OK(itemApiResponse);

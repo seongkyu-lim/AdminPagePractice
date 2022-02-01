@@ -24,4 +24,6 @@ public class ItemApiResponse {
     private String content;
     private LocalDateTime registeredAt;
     private LocalDateTime unregisteredAt;
+    private Long parterId;
+
 }
