@@ -6,18 +6,18 @@ import com.loopy.model.network.Header;
 import com.loopy.model.network.request.UserApiRequest;
 import com.loopy.model.network.response.UserApiResponse;
 import com.loopy.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class UserApiLogicService implements CrudInterface<UserApiRequest, UserApiResponse> {
 
-
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     // 1. request data 가져오기.
     // 2. user 생성

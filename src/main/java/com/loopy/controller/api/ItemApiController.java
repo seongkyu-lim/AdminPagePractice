@@ -6,8 +6,7 @@ import com.loopy.model.network.request.ItemApiRequest;
 import com.loopy.model.network.response.ItemApiResponse;
 import com.loopy.service.ItemApiLogicService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/item")
 @RestController
@@ -17,22 +16,26 @@ public class ItemApiController implements CrudInterface<ItemApiRequest, ItemApiR
     private ItemApiLogicService itemApiLogicService;
 
     @Override
-    public Header<ItemApiResponse> create(Header<ItemApiRequest> request) {
+    @PostMapping("")
+    public Header<ItemApiResponse> create(@RequestBody Header<ItemApiRequest> request) {
         return itemApiLogicService.create(request);
     }
 
     @Override
-    public Header<ItemApiResponse> read(Long id) {
-        return null;
+    @GetMapping("{id}")
+    public Header<ItemApiResponse> read(@PathVariable Long id) {
+        return itemApiLogicService.read(id);
     }
 
     @Override
+    @PutMapping("")
     public Header<ItemApiResponse> update(Header<ItemApiRequest> request) {
-        return null;
+        return itemApiLogicService.update(request);
     }
 
     @Override
-    public Header delete(Long id) {
-        return null;
+    @DeleteMapping("{id}")
+    public Header<ItemApiResponse> delete(@PathVariable Long id) {
+        return itemApiLogicService.delete(id);
     }
 }

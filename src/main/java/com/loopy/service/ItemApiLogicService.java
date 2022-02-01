@@ -2,22 +2,21 @@ package com.loopy.service;
 
 import com.loopy.ifs.CrudInterface;
 import com.loopy.model.entity.Item;
-import com.loopy.model.entity.User;
 import com.loopy.model.network.Header;
 import com.loopy.model.network.request.ItemApiRequest;
 import com.loopy.model.network.response.ItemApiResponse;
-import com.loopy.model.network.response.UserApiResponse;
 import com.loopy.repository.ItemRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemApiResponse> {
 
-    @Autowired
-    private ItemRepository itemRepository;
+    private final ItemRepository itemRepository;
 
     @Override
     public Header<ItemApiResponse> create(Header<ItemApiRequest> request) {
@@ -41,17 +40,42 @@ public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemAp
 
     @Override
     public Header<ItemApiResponse> read(Long id) {
-        return null;
+        Optional<Item> optional = itemRepository.findById(id);
+        return optional
+                .map(item -> response(item))
+                .orElseGet(()->Header.ERROR("데이터 없음"));
     }
 
     @Override
     public Header<ItemApiResponse> update(Header<ItemApiRequest> request) {
-        return null;
+        ItemApiRequest itemApiRequest = request.getData();
+        Optional<Item> optional = itemRepository.findById(itemApiRequest.getId());
+
+        return optional.map(item -> {
+            item
+                .setStatus(itemApiRequest.getStatus())
+                    .setName(itemApiRequest.getName())
+                    .setTitle(itemApiRequest.getTitle())
+                    .setBrandName(itemApiRequest.getBrandName())
+                    .setPrice(itemApiRequest.getPrice())
+                    .setContent(itemApiRequest.getContent());
+
+            itemRepository.save(item);
+
+            return response(item);
+
+        }).orElseGet(()-> Header.ERROR("데이터 없음."));
     }
 
     @Override
     public Header delete(Long id) {
-        return null;
+
+        Optional<Item> optional = itemRepository.findById(id);
+
+        return optional.map(item -> {
+            itemRepository.delete(item);
+            return Header.OK();
+        }).orElseGet(()-> Header.ERROR("데이터 없음."));
     }
 
     private Header<ItemApiResponse> response(Item item){

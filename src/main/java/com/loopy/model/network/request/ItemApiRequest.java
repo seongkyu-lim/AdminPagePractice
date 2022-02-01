@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 @Builder
 public class ItemApiRequest {
 
+    private Long id;
     private String status;
     private String name;
     private String title;
