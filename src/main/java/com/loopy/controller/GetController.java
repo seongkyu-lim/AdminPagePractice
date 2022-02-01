@@ -1,8 +1,8 @@
 package com.loopy.controller;
 
 
-import com.loopy.model.SearchParam;
-import com.loopy.model.network.Header;
+import com.loopy.domain.SearchParam;
+import com.loopy.domain.network.Header;
 import org.springframework.web.bind.annotation.*;
 
 //문자열 반환

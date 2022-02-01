@@ -1,6 +1,6 @@
 package com.loopy.ifs;
 
-import com.loopy.model.network.Header;
+import com.loopy.domain.network.Header;
 
 public interface CrudInterface<Req, Res> {
 

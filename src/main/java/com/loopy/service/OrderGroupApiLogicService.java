@@ -1,12 +1,12 @@
 package com.loopy.service;
 
 import com.loopy.ifs.CrudInterface;
-import com.loopy.model.entity.OrderGroup;
-import com.loopy.model.network.Header;
-import com.loopy.model.network.request.OrderGroupApiRequest;
-import com.loopy.model.network.response.OrderGroupApiResponse;
-import com.loopy.repository.OrderGroupRepository;
-import com.loopy.repository.UserRepository;
+import com.loopy.domain.entity.OrderGroup;
+import com.loopy.domain.network.Header;
+import com.loopy.domain.network.request.OrderGroupApiRequest;
+import com.loopy.domain.network.response.OrderGroupApiResponse;
+import com.loopy.domain.repository.OrderGroupRepository;
+import com.loopy.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

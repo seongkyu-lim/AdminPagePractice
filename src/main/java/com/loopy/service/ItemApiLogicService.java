@@ -1,12 +1,12 @@
 package com.loopy.service;
 
 import com.loopy.ifs.CrudInterface;
-import com.loopy.model.entity.Item;
-import com.loopy.model.network.Header;
-import com.loopy.model.network.request.ItemApiRequest;
-import com.loopy.model.network.response.ItemApiResponse;
-import com.loopy.repository.ItemRepository;
-import com.loopy.repository.PartnerRepository;
+import com.loopy.domain.entity.Item;
+import com.loopy.domain.network.Header;
+import com.loopy.domain.network.request.ItemApiRequest;
+import com.loopy.domain.network.response.ItemApiResponse;
+import com.loopy.domain.repository.ItemRepository;
+import com.loopy.domain.repository.PartnerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -86,11 +86,14 @@ public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemAp
     private Header<ItemApiResponse> response(Item item){
         // item -> itemApiResponse
 
+        //아래와 같이 세부적으로 enum 값의 내부 요소들에 대해 접근가능.
+        String statusTitle = item.getStatus().getDescription();
+
         ItemApiResponse itemApiResponse = ItemApiResponse.builder()
                 .id(item.getId())
                 .status(item.getStatus())
                 .name(item.getName())
-                .title(item.getStatus())
+                .title(item.getTitle())
                 .brandName(item.getBrandName())
                 .price(item.getPrice())
                 .content(item.getContent())

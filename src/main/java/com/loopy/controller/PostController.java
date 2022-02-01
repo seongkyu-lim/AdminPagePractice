@@ -1,6 +1,6 @@
 package com.loopy.controller;
 
-import com.loopy.model.SearchParam;
+import com.loopy.domain.SearchParam;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

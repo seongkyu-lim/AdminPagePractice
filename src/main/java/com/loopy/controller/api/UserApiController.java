@@ -1,9 +1,9 @@
 package com.loopy.controller.api;
 
 import com.loopy.ifs.CrudInterface;
-import com.loopy.model.network.Header;
-import com.loopy.model.network.request.UserApiRequest;
-import com.loopy.model.network.response.UserApiResponse;
+import com.loopy.domain.network.Header;
+import com.loopy.domain.network.request.UserApiRequest;
+import com.loopy.domain.network.response.UserApiResponse;
 import com.loopy.service.UserApiLogicService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,13 +1,13 @@
 package com.loopy.service;
 
 import com.loopy.ifs.CrudInterface;
-import com.loopy.model.entity.User;
-import com.loopy.model.network.Header;
-import com.loopy.model.network.request.UserApiRequest;
-import com.loopy.model.network.response.UserApiResponse;
-import com.loopy.repository.UserRepository;
+import com.loopy.domain.entity.User;
+import com.loopy.domain.enumclass.UserStatus;
+import com.loopy.domain.network.Header;
+import com.loopy.domain.network.request.UserApiRequest;
+import com.loopy.domain.network.response.UserApiResponse;
+import com.loopy.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -30,7 +30,7 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
          User user = User.builder()
                  .account(userApiRequest.getAccount())
                  .password(userApiRequest.getPassword())
-                 .status("REGISTERED")
+                 .status(UserStatus.REGISTERED)
                  .email(userApiRequest.getEmail())
                  .phoneNumber(userApiRequest.getPhoneNumber())
                  .registeredAt(LocalDateTime.now())
@@ -47,7 +47,7 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
         Optional<User> optional = userRepository.findById(id);
 
         return optional
-                .map(user -> response(user))
+                .map(this::response)
                 .orElseGet(() -> Header.ERROR("데이터 없음"));
     }
 
@@ -69,8 +69,8 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
                             .setPhoneNumber(userApiRequest.getPhoneNumber());
                     return user;
         })
-                .map(user -> userRepository.save(user))
-                .map(updateUser -> response(updateUser))
+                .map(userRepository::save)
+                .map(this::response)
                 .orElseGet(() -> Header.ERROR("업데이트할 데이터 없음"));
     }
 

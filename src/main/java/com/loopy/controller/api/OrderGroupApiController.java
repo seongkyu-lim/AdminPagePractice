@@ -1,9 +1,9 @@
 package com.loopy.controller.api;
 
 import com.loopy.ifs.CrudInterface;
-import com.loopy.model.network.Header;
-import com.loopy.model.network.request.OrderGroupApiRequest;
-import com.loopy.model.network.response.OrderGroupApiResponse;
+import com.loopy.domain.network.Header;
+import com.loopy.domain.network.request.OrderGroupApiRequest;
+import com.loopy.domain.network.response.OrderGroupApiResponse;
 import com.loopy.service.OrderGroupApiLogicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
