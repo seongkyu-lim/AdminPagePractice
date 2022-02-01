@@ -35,13 +35,13 @@ public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiReq
                 .totalPrice(orderGroupApiRequest.getTotalPrice())
                 .totalQuantity(orderGroupApiRequest.getTotalQuantity())
                 .orderAt(LocalDateTime.now())
-                .arrivalDate(LocalDateTime.MAX)
+                // user객체와 연결해주면서 user에도 연결을 해주어야되는 것아닌가? -> 실제 db에서는 적용안되는 것이니 나중에 해도 상관없나?
                 .user(userRepository.getOne(orderGroupApiRequest.getUserId()))
                 .build();
 
-        orderGroupRepository.save(orderGroup);
+        OrderGroup newOrderGroup =  orderGroupRepository.save(orderGroup);
 
-        return response(orderGroup);
+        return response(newOrderGroup);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiReq
         Optional<OrderGroup> optional = orderGroupRepository.findById(id);
 
         return optional
-                .map(orderGroup -> response(orderGroup))
+                .map(this::response)
                 .orElseGet(()->Header.ERROR("데이터 없음."));
     }
 
@@ -75,8 +75,8 @@ public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiReq
                     .setUser(userRepository.getOne(orderGroupApiRequest.getUserId()))
                     .builder();
 
-            orderGroupRepository.save(orderGroup); // -> save하면 기존의 값이 업데이트 되는 것이 맞나..?
-            return response(orderGroup);
+             OrderGroup newOrderGroup =  orderGroupRepository.save(orderGroup); // -> save하면 기존의 값이 업데이트 되는 것이 맞나..?
+            return response(newOrderGroup);
 
         }).orElseGet(()->Header.ERROR("데이터 없음."));
     }
@@ -95,7 +95,6 @@ public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiReq
 
     private Header<OrderGroupApiResponse> response(OrderGroup orderGroup){
         // user -> userApiResponse
-
         OrderGroupApiResponse orderGroupApiResponse = OrderGroupApiResponse.builder()
                 .id(orderGroup.getId())
                 .status(orderGroup.getStatus())
@@ -107,6 +106,7 @@ public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiReq
                 .totalQuantity(orderGroup.getTotalQuantity())
                 .orderAt(orderGroup.getOrderAt())
                 .arrivalDate(orderGroup.getArrivalDate())
+                .userId(orderGroup.getUser().getId())
                 .build();
 
         return Header.OK(orderGroupApiResponse);
