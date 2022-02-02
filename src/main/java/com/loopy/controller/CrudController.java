@@ -2,11 +2,17 @@ package com.loopy.controller;
 
 import com.loopy.domain.network.Header;
 import com.loopy.ifs.CrudInterface;
+import com.loopy.service.BaseService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
-public abstract class CrudController<Req, Res> implements CrudInterface<Req, Res> {
+@Component
+public abstract class CrudController<Req, Res, Entity> implements CrudInterface<Req, Res> {
 
-    protected CrudInterface<Req, Res> baseService;
+
+    @Autowired(required = false)
+    protected BaseService<Req, Res, Entity> baseService;
 
     @Override
     @PostMapping("")
