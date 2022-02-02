@@ -1,47 +1,25 @@
 package com.loopy.controller.api;
 
-import com.loopy.ifs.CrudInterface;
-import com.loopy.domain.network.Header;
+import com.loopy.controller.CrudController;
 import com.loopy.domain.network.request.UserApiRequest;
 import com.loopy.domain.network.response.UserApiResponse;
 import com.loopy.service.UserApiLogicService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@Slf4j
+import javax.annotation.PostConstruct;
+
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/user")
-public class UserApiController implements CrudInterface<UserApiRequest, UserApiResponse> {
+public class UserApiController extends CrudController<UserApiRequest, UserApiResponse> {
 
-    @Autowired
-    private UserApiLogicService userApiLogicService;
+    private final UserApiLogicService userApiLogicService;
 
-    @Override
-    @PostMapping("")
-    public Header<UserApiResponse> create(@RequestBody Header<UserApiRequest> request) {
-        log.info("{}", request);
-        return userApiLogicService.create(request);
+    @PostConstruct
+    public void init(){
+        this.baseService = userApiLogicService;
     }
 
-    @Override
-    @GetMapping("{id}")
-    public Header<UserApiResponse> read(@PathVariable Long id) {
-        log.info("{}", id);
-        return userApiLogicService.read(id);
-    }
 
-    @Override
-    @PutMapping("")
-    public Header<UserApiResponse> update(@RequestBody Header<UserApiRequest> request) {
-        log.info("{}", request);
-        return userApiLogicService.update(request);
-    }
-
-    @Override
-    @DeleteMapping("{id}")
-    public Header<UserApiResponse> delete(@PathVariable Long id) {
-        log.info("{}", id);
-        return userApiLogicService.delete(id);
-    }
 }

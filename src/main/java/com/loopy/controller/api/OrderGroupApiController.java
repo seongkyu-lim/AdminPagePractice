@@ -1,41 +1,23 @@
 package com.loopy.controller.api;
 
-import com.loopy.ifs.CrudInterface;
-import com.loopy.domain.network.Header;
+import com.loopy.controller.CrudController;
 import com.loopy.domain.network.request.OrderGroupApiRequest;
 import com.loopy.domain.network.response.OrderGroupApiResponse;
 import com.loopy.service.OrderGroupApiLogicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
+
 @RequiredArgsConstructor
 @RequestMapping("/api/orderGroup")
 @RestController
-public class OrderGroupApiController implements CrudInterface<OrderGroupApiRequest, OrderGroupApiResponse> {
+public class OrderGroupApiController extends CrudController<OrderGroupApiRequest, OrderGroupApiResponse> {
 
     private final OrderGroupApiLogicService orderGroupApiLogicService;
 
-    @Override
-    @PostMapping("")
-    public Header<OrderGroupApiResponse> create(@RequestBody Header<OrderGroupApiRequest> request) {
-        return orderGroupApiLogicService.create(request);
-    }
-
-    @Override
-    @GetMapping("{id}")
-    public Header<OrderGroupApiResponse> read(@PathVariable Long id) {
-        return orderGroupApiLogicService.read(id);
-    }
-
-    @Override
-    @PutMapping("")
-    public Header<OrderGroupApiResponse> update(@RequestBody Header<OrderGroupApiRequest> request) {
-        return orderGroupApiLogicService.update(request);
-    }
-
-    @Override
-    @DeleteMapping("{id}")
-    public Header<OrderGroupApiResponse> delete(@PathVariable Long id) {
-        return orderGroupApiLogicService.delete(id);
+    @PostConstruct
+    public void init(){
+        this.baseService = orderGroupApiLogicService;
     }
 }
