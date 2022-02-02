@@ -3,7 +3,6 @@ package com.loopy.domain.repository;
 import com.loopy.ApplicationTests;
 import com.loopy.domain.entity.User;
 import com.loopy.domain.enumclass.UserStatus;
-import com.loopy.domain.repository.UserRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +57,7 @@ public class UserRepositoryTest extends ApplicationTests {
         Assert.assertNotNull(newUser);
         Assert.assertEquals(newUser.getAccount(), account);
         Assert.assertEquals(newUser.getPassword(), password);
-        Assert.assertEquals(newUser.getStatus(), status);
+        Assert.assertEquals(newUser.getStatus(), UserStatus.REGISTERED);
         Assert.assertEquals(newUser.getEmail(), email);
         Assert.assertEquals(newUser.getPhoneNumber(), phoneNumber);
         Assert.assertEquals(newUser.getRegisteredAt(), registeredAt);
@@ -91,9 +90,6 @@ public class UserRepositoryTest extends ApplicationTests {
                 System.out.println("partner사 카테고리 : "+orderDetail.getItem().getPartner().getCategory().getTitle());
                 System.out.println("주문 상태 : "+orderDetail.getStatus());
                 System.out.println("도착예정일자 : "+orderDetail.getArrivalDate());
-
-
-
             });
         });
 
