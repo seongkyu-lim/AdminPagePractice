@@ -22,7 +22,7 @@ public class OrderDetailRepositoryTest extends ApplicationTests {
         orderDetail.setStatus("waiting");
         orderDetail.setArrivalDate(LocalDateTime.now().plusDays(2));
         orderDetail.setQuantity(4);
-        orderDetail.setPrice(BigDecimal.valueOf(10000));
+        orderDetail.setTotalPrice(BigDecimal.valueOf(10000));
         orderDetail.setCreatedBy("adminServer");
         orderDetail.setCreatedAt(LocalDateTime.now());
         // orderDetail.setItemId(1L);

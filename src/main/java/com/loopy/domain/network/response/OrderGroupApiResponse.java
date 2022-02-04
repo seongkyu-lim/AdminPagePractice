@@ -22,7 +22,7 @@ public class OrderGroupApiResponse {
     private String revName;
     private String paymentType;
     private BigDecimal totalPrice;
-    private Long totalQuantity;
+    private int totalQuantity;
     private LocalDateTime orderAt;
     private LocalDateTime arrivalDate;
     private Long userId;

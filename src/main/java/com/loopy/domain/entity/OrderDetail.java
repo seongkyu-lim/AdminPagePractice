@@ -29,7 +29,8 @@ public class OrderDetail {
     private String status;
     private LocalDateTime arrivalDate;
     private Integer quantity;
-    private BigDecimal price;
+    private BigDecimal totalPrice;
+
     @CreatedDate
     private LocalDateTime createdAt;
 

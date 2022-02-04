@@ -3,7 +3,6 @@ package com.loopy.domain.repository;
 import com.loopy.ApplicationTests;
 import com.loopy.domain.entity.OrderGroup;
 import com.loopy.domain.enumclass.OrderGroupOrderType;
-import com.loopy.domain.repository.OrderGroupRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ public class OrderGroupRepositoryTest extends ApplicationTests {
         orderGroup.setRevName("seongkyulim");
         orderGroup.setPaymentType("card");
         orderGroup.setTotalPrice(BigDecimal.valueOf(100000));
-        orderGroup.setTotalQuantity(5L);
+        orderGroup.setTotalQuantity(5);
         orderGroup.setOrderAt(LocalDateTime.now().minusDays(2));
         orderGroup.setArrivalDate(LocalDateTime.now().plusDays(1));
         orderGroup.setCreatedAt(LocalDateTime.now());
