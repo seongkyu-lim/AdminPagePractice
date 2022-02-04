@@ -1,16 +1,16 @@
 package com.loopy.service;
 
-import com.loopy.ifs.CrudInterface;
 import com.loopy.domain.entity.OrderGroup;
 import com.loopy.domain.network.Header;
 import com.loopy.domain.network.request.OrderGroupApiRequest;
 import com.loopy.domain.network.response.OrderGroupApiResponse;
-import com.loopy.domain.repository.OrderGroupRepository;
 import com.loopy.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -90,6 +90,11 @@ public class OrderGroupApiLogicService extends BaseService<OrderGroupApiRequest,
                     baseRepository.delete(orderGroup);
                     return Header.OK();
         }).orElseGet(() -> Header.ERROR("데이터없음."));
+    }
+
+    @Override
+    public Header<List<OrderGroupApiResponse>> search(Pageable pageable) {
+        return null;
     }
 
     private Header<OrderGroupApiResponse> response(OrderGroup orderGroup){

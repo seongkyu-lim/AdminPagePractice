@@ -4,8 +4,10 @@ import com.loopy.domain.entity.Partner;
 import com.loopy.domain.network.Header;
 import com.loopy.domain.network.request.PartnerApiRequest;
 import com.loopy.domain.network.response.PartnerApiResponse;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,6 +32,11 @@ public class PartnerApiLogicService extends BaseService<PartnerApiRequest, Partn
 
     @Override
     public Header<PartnerApiResponse> delete(Long id) {
+        return null;
+    }
+
+    @Override
+    public Header<List<PartnerApiResponse>> search(Pageable pageable) {
         return null;
     }
 

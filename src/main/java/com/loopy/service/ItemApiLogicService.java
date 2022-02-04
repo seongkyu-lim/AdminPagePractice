@@ -1,17 +1,16 @@
 package com.loopy.service;
 
-import com.loopy.ifs.CrudInterface;
 import com.loopy.domain.entity.Item;
 import com.loopy.domain.network.Header;
 import com.loopy.domain.network.request.ItemApiRequest;
 import com.loopy.domain.network.response.ItemApiResponse;
-import com.loopy.domain.repository.ItemRepository;
 import com.loopy.domain.repository.PartnerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.parser.Entity;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -81,6 +80,11 @@ public class ItemApiLogicService extends BaseService<ItemApiRequest, ItemApiResp
             baseRepository.delete(item);
             return Header.OK();
         }).orElseGet(()-> Header.ERROR("데이터 없음."));
+    }
+
+    @Override
+    public Header<List<ItemApiResponse>> search(Pageable pageable) {
+        return null;
     }
 
     private Header<ItemApiResponse> response(Item item){

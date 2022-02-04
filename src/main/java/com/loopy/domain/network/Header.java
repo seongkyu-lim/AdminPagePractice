@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
@@ -25,6 +26,8 @@ public class Header<T> {
     //계속해서 바뀌는 데이터 부분(body)
     // 이렇게 하면 데이터 부분에 어떤 클래스의 객체가 들어와도 상관없어진다.
     private T data;
+
+    private Pagination pagination;
 
     //ok
     public static <T> Header<T> OK(){
@@ -53,4 +56,15 @@ public class Header<T> {
                 .description(description)
                 .build();
     }
+
+    public static <T> Header<T> OK(T data, Pagination pagination){
+        return (Header<T>) Header.builder()
+                .transactionTime(LocalDateTime.now())
+                .resultCode("ok")
+                .description("ok")
+                .data(data)
+                .pagination(pagination)
+                .build();
+    }
+
 }

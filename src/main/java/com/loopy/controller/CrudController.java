@@ -1,11 +1,17 @@
 package com.loopy.controller;
 
 import com.loopy.domain.network.Header;
+import com.loopy.domain.network.response.UserApiResponse;
 import com.loopy.ifs.CrudInterface;
 import com.loopy.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Component
 public abstract class CrudController<Req, Res, Entity> implements CrudInterface<Req, Res> {
@@ -36,4 +42,5 @@ public abstract class CrudController<Req, Res, Entity> implements CrudInterface<
     public Header<Res> delete(@PathVariable Long id) {
         return baseService.delete(id);
     }
+
 }
