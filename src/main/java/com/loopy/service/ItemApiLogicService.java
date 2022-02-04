@@ -82,12 +82,8 @@ public class ItemApiLogicService extends BaseService<ItemApiRequest, ItemApiResp
         }).orElseGet(()-> Header.ERROR("데이터 없음."));
     }
 
-    @Override
-    public Header<List<ItemApiResponse>> search(Pageable pageable) {
-        return null;
-    }
 
-    private Header<ItemApiResponse> response(Item item){
+    public Header<ItemApiResponse> response(Item item){
         // item -> itemApiResponse
 
         //아래와 같이 세부적으로 enum 값의 내부 요소들에 대해 접근가능.

@@ -1,11 +1,19 @@
 package com.loopy.service;
 
+import com.loopy.domain.entity.Item;
+import com.loopy.domain.entity.OrderDetail;
+import com.loopy.domain.entity.OrderGroup;
 import com.loopy.domain.entity.User;
 import com.loopy.domain.enumclass.UserStatus;
 import com.loopy.domain.network.Header;
 import com.loopy.domain.network.Pagination;
 import com.loopy.domain.network.request.UserApiRequest;
+import com.loopy.domain.network.response.ItemApiResponse;
+import com.loopy.domain.network.response.OrderGroupApiResponse;
 import com.loopy.domain.network.response.UserApiResponse;
+import com.loopy.domain.network.response.UserOrderInfoApiResponse;
+import com.loopy.domain.repository.UserRepository;
+import com.loopy.ifs.CrudInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +26,11 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResponse, User> {
+public class UserApiLogicService implements CrudInterface<UserApiRequest, UserApiResponse> {
+
+    private final UserRepository userRepository;
+    private final OrderGroupApiLogicService orderGroupApiLogicService;
+    private final ItemApiLogicService itemApiLogicService;
 
     // 1. request data 가져오기.
     // 2. user 생성
@@ -37,7 +49,7 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
                  .registeredAt(LocalDateTime.now())
                  .build();
 
-         User newUser = baseRepository.save(user);
+         User newUser = userRepository.save(user);
 
         return Header.OK(response(newUser));
     }
@@ -45,7 +57,7 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
     @Override
     public Header<UserApiResponse> read(Long id) {
 
-        Optional<User> optional = baseRepository.findById(id);
+        Optional<User> optional = userRepository.findById(id);
 
         return optional
                 .map(user -> Header.OK(response(user)))
@@ -57,7 +69,7 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
 
         UserApiRequest userApiRequest = request.getData();
 
-        Optional<User> optional = baseRepository.findById(userApiRequest.getId()) ;
+        Optional<User> optional = userRepository.findById(userApiRequest.getId()) ;
 
         return optional
                 .map(user -> {
@@ -70,7 +82,7 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
                             .setPhoneNumber(userApiRequest.getPhoneNumber());
                     return user;
         })
-                .map(baseRepository::save)
+                .map(userRepository::save)
                 .map(user -> Header.OK(response(user)))
                 .orElseGet(() -> Header.ERROR("업데이트할 데이터 없음"));
     }
@@ -78,11 +90,11 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
     @Override
     public Header delete(Long id) {
 
-        Optional<User> optional = baseRepository.findById(id);
+        Optional<User> optional = userRepository.findById(id);
 
         return optional
                 .map(user -> {
-                    baseRepository.delete(user);
+                    userRepository.delete(user);
                     return Header.OK();
                 })
                 .orElseGet(() -> Header.ERROR("삭제할 데이터 없음"));
@@ -91,7 +103,7 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
 
     public Header<List<UserApiResponse>> search(Pageable pageable){
 
-        Page<User> users = baseRepository.findAll(pageable);
+        Page<User> users = userRepository.findAll(pageable);
 
         List<UserApiResponse> userApiResponseList = users.stream()
                 .map(this::response)
@@ -124,5 +136,45 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
                 .build();
 
         return userApiResponse;
+    }
+
+    public Header<UserOrderInfoApiResponse> orderInfo(Long id) {
+
+        //user
+
+        User user = userRepository.getOne(id);
+
+        UserApiResponse userApiResponse = response(user);
+
+
+
+        //orderGroup
+
+        // user 데이터를 만들때, orderGroupList에 대한 값을 생성해주지 않았는데, 그러면 빈값인거 아닌가 ?
+        List<OrderGroup> orderGroupList = user.getOrderGroupList();
+
+        List<OrderGroupApiResponse> orderGroupApiResponseList =  orderGroupList.stream()
+                .map(orderGroup -> {
+                    OrderGroupApiResponse orderGroupApiResponse =  orderGroupApiLogicService.response(orderGroup).getData();
+
+                    //ItemApiResponse
+                    List<ItemApiResponse> itemApiResponseList =  orderGroup.getOrderDetailList().stream()
+                            .map(orderDeTail -> {
+                                Item item = orderDeTail.getItem();
+                                return itemApiLogicService.response(item).getData();
+                            })
+                            .collect(Collectors.toList());
+
+                    return orderGroupApiResponse.setItemApiResponseList(itemApiResponseList);
+                })
+                .collect(Collectors.toList());
+
+        userApiResponse.setOrderGroupApiResponseList(orderGroupApiResponseList);
+        UserOrderInfoApiResponse userOrderInfoApiResponse = UserOrderInfoApiResponse.builder()
+                .userApiResponse(userApiResponse)
+                .build();
+
+        return Header.OK(userOrderInfoApiResponse);
+
     }
 }

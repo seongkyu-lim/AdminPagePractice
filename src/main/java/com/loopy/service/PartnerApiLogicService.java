@@ -35,11 +35,6 @@ public class PartnerApiLogicService extends BaseService<PartnerApiRequest, Partn
         return null;
     }
 
-    @Override
-    public Header<List<PartnerApiResponse>> search(Pageable pageable) {
-        return null;
-    }
-
     private Header<PartnerApiResponse> response(Partner partner){
 
         PartnerApiResponse partnerApiResponse = PartnerApiResponse.builder()

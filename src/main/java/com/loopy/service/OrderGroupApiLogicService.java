@@ -92,12 +92,7 @@ public class OrderGroupApiLogicService extends BaseService<OrderGroupApiRequest,
         }).orElseGet(() -> Header.ERROR("데이터없음."));
     }
 
-    @Override
-    public Header<List<OrderGroupApiResponse>> search(Pageable pageable) {
-        return null;
-    }
-
-    private Header<OrderGroupApiResponse> response(OrderGroup orderGroup){
+    public Header<OrderGroupApiResponse> response(OrderGroup orderGroup){
         // user -> userApiResponse
         OrderGroupApiResponse orderGroupApiResponse = OrderGroupApiResponse.builder()
                 .id(orderGroup.getId())
